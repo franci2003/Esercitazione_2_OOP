@@ -1,5 +1,10 @@
+#pragma once
 #include <iostream>
-template <typename T>
+#include <concepts>
+
+// vincolo T ad essere un tipo floating point 
+
+template <typename T> requires std::floating_point<T>
 class ComplexNumber {
 private:
     T a;       // Parte reale
@@ -76,15 +81,16 @@ public:
         b *= scalar;
         return *this;
     }
+	
     };
 	
  // Overload dell'operatore <<
  template <typename T>
     std::ostream& operator<<(std::ostream& os, const ComplexNumber<T>& c) {
-        if (c.b >= 0) {
-            os << c.a << "+" << c.b << "i";
+        if (c.getImag() >= 0) {
+            os << c.getReal() << "+" << c.getImag() << "i";
         } else {
-            os << c.a << c.b << "i"; // segno meno già in c.b
+            os << c.getReal() << c.getImag() << "i"; // segno meno già in c.b
         }
         return os;
     };	
